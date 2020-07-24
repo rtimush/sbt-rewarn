@@ -19,11 +19,19 @@ lazy val `sbt-1.2.0`    = SbtAxis("1.2.0")
 lazy val `sbt-1.1.0`    = SbtAxis("1.1.0")
 lazy val `sbt-1.0.0`    = SbtAxis("1.0.0")
 
+lazy val publishSettings = Seq(
+  publishMavenStyle := false,
+  bintrayRepository := (if (isSnapshot.value) "sbt-plugin-snapshots" else "sbt-plugins"),
+  bintrayOrganization in bintray := None,
+  bintrayReleaseOnPublish := isSnapshot.value
+)
+
 lazy val `sbt-rewarn-common` = (project in file("common"))
   .disablePlugins(GitVersioningPlugin)
   .settings(
     scalaVersion := `sbt-1.x`.scalaVersion,
-    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.x`.fullVersion % Provided
+    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.x`.fullVersion % Provided,
+    publish / skip := true
   )
 
 lazy val `sbt-rewarn-adapter-lsp` = (project in file("adapters/lsp"))
@@ -31,7 +39,8 @@ lazy val `sbt-rewarn-adapter-lsp` = (project in file("adapters/lsp"))
   .disablePlugins(GitVersioningPlugin)
   .settings(
     scalaVersion := `sbt-1.x`.scalaVersion,
-    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.3.13`.fullVersion % Provided
+    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.3.13`.fullVersion % Provided,
+    publish / skip := true
   )
 
 lazy val `sbt-rewarn-adapter-bsp` = (project in file("adapters/bsp"))
@@ -39,7 +48,8 @@ lazy val `sbt-rewarn-adapter-bsp` = (project in file("adapters/bsp"))
   .disablePlugins(GitVersioningPlugin)
   .settings(
     scalaVersion := `sbt-1.x`.scalaVersion,
-    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.4.0-M1`.fullVersion % Provided
+    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.4.0-M1`.fullVersion % Provided,
+    publish / skip := true
   )
 
 lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
@@ -51,6 +61,7 @@ lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
         Compile / products ++= (`sbt-rewarn-adapter-lsp` / Compile / products).value,
         Compile / products ++= (`sbt-rewarn-adapter-bsp` / Compile / products).value
       )
+      .settings(publishSettings)
   )
   .sbtScriptedRow(`sbt-1.0.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.1.0`, `sbt-1.x`)
