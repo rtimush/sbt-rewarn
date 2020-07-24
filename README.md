@@ -6,6 +6,8 @@ By default, `sbt` shows compilation warnings only for the source files that have
 
 This is particularly helpful if you want to keep your project warning-free. Simply enabling `-Xfatal-warnings` can be too annoying during development, especially the `-Wunused:*` family of warnings. The better alternative is to make warnings fatal on CI but not locally. Together with this plugin, you will always see if you have introduced any warnings, regardless of the incremental compilation.
 
+![sbt-rewarn](https://user-images.githubusercontent.com/831307/88443498-d49fc980-ce18-11ea-8154-8245ceb309c1.png)
+
 Requirements
 ==============
 sbt 1.0.0 or later.
