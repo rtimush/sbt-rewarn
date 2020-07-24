@@ -1,0 +1,7 @@
+> compile
+> contains "private val a in object A is never used"
+> contains "one warning found"
+> wipe
+> compile
+> contains "private val a in object A is never used"
+> contains "one warning found"
