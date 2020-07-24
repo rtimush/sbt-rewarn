@@ -15,7 +15,9 @@ Global / scriptedLaunchOpts += s"-Dsbt.rewarn.version=${version.value}"
 lazy val `sbt-1.x`      = SbtAxis("1.x", "1.1.5")
 lazy val `sbt-1.4.0-M1` = SbtAxis("1.4.0-M1")
 lazy val `sbt-1.3.13`   = SbtAxis("1.3.13")
+lazy val `sbt-1.2.0`    = SbtAxis("1.2.0")
 lazy val `sbt-1.1.0`    = SbtAxis("1.1.0")
+lazy val `sbt-1.0.0`    = SbtAxis("1.0.0")
 
 lazy val `sbt-rewarn-common` = (project in file("common"))
   .disablePlugins(GitVersioningPlugin)
@@ -50,7 +52,9 @@ lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
         Compile / products ++= (`sbt-rewarn-adapter-bsp` / Compile / products).value
       )
   )
+  .sbtScriptedRow(`sbt-1.0.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.1.0`, `sbt-1.x`)
+  .sbtScriptedRow(`sbt-1.2.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.3.13`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.4.0-M1`, `sbt-1.x`)
 

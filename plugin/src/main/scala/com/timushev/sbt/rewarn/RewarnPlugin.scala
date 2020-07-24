@@ -1,6 +1,5 @@
 package com.timushev.sbt.rewarn
 
-import sbt.Defaults.foldMappers
 import sbt.Keys._
 import sbt._
 import sbt.rewarn.Accessors.compilerReporter
@@ -15,8 +14,8 @@ object RewarnPlugin extends AutoPlugin {
     Seq(Compile, Test).flatMap { config =>
       inConfig(config)(
         Seq(
-          compile / compilerReporter := Def.taskDyn {
-            val oldReporter = (compile / compilerReporter).value
+          compilerReporter in compile := Def.taskDyn {
+            val oldReporter = (compilerReporter in compile).value
             oldReporter.getClass.getName match {
               case "sbt.internal.server.LanguageServerReporter" =>
                 RewarnLanguageServerReporter.reporter
@@ -28,7 +27,7 @@ object RewarnPlugin extends AutoPlugin {
           }.value,
           compile := {
             val analysis = compile.value
-            val reporter = (compile / compilerReporter).value
+            val reporter = (compilerReporter in compile).value
             reporter match {
               case rewarn: RewarnReporter =>
                 rewarn.printOldProblems(analysis)
