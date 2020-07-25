@@ -20,7 +20,15 @@ If you want this plugin to be available for all `sbt` projects you work with, co
 If you want to enable this plugin for some specific project only, configure it in `<project-root>/project/plugins.sbt`.
 
 ### Stable version
-Not available yet.
+Add the following line to the `plugins.sbt` file:
+
+```
+addSbtPlugin("com.timushev.sbt" % "sbt-rewarn" % "x.x.x")
+```
+
+The latest version is ![Bintray](https://img.shields.io/bintray/v/rtimush/sbt-plugins/sbt-rewarn?color=blue&label=sbt-rewarn&style=plastic)
+
+No additional configuration is necessary, the plugin will be automatically activated.
 
 ### Snapshot version
 Choose one of versions available on [BinTray](https://bintray.com/rtimush/sbt-plugin-snapshots/sbt-rewarn/view)
@@ -28,7 +36,7 @@ or the [latest](https://bintray.com/rtimush/sbt-plugin-snapshots/sbt-rewarn/_lat
 
 ```
 resolvers += Resolver.bintrayIvyRepo("rtimush", "sbt-plugin-snapshots")
-addSbtPlugin("com.timushev.sbt" % "sbt-rewarn" % "x.x.x-y+gzzzzzzz")
+addSbtPlugin("com.timushev.sbt" % "sbt-rewarn" % "x.x.x-y-zzzzzzz")
 ```
 
 Note, that snapshots are not updated automatically.
