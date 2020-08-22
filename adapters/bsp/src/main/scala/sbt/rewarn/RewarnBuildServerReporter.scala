@@ -1,20 +1,22 @@
 package sbt.rewarn
 
+import java.io.File
+
 import sbt.Defaults.foldMappers
 import sbt.Keys._
 import sbt._
 import sbt.internal.bsp.BuildTargetIdentifier
 import sbt.internal.server.BuildServerReporter
 import sbt.internal.util.ManagedLogger
-import xsbti.{FileConverter, Position, Reporter}
+import xsbti.{Position, Reporter}
 
 class RewarnBuildServerReporter(
     buildTarget: BuildTargetIdentifier,
     maximumErrors: Int,
     logger: ManagedLogger,
     sourcePositionMapper: Position => Position = identity,
-    converter: FileConverter
-) extends BuildServerReporter(buildTarget, maximumErrors, logger, sourcePositionMapper, converter)
+    sources: Seq[File]
+) extends BuildServerReporter(buildTarget, maximumErrors, logger, sourcePositionMapper, sources)
     with RewarnReporter
 
 object RewarnBuildServerReporter {
@@ -25,7 +27,7 @@ object RewarnBuildServerReporter {
         maxErrors.value,
         streams.value.log,
         foldMappers(sourcePositionMappers.value),
-        fileConverter.value
+        sources.value
       )
     }
 }
