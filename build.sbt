@@ -69,7 +69,9 @@ lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
   .sbtScriptedRow(`sbt-1.3.13`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.4.0-M2`, `sbt-1.x`)
 
-lazy val root = (project in file("."))
+lazy val root = project
+  .withId("sbt-rewarn")
+  .in(file("."))
   .aggregate(`sbt-rewarn-adapter-lsp`, `sbt-rewarn-adapter-bsp`)
   .aggregate(`sbt-rewarn`.projectRefs: _*)
   .settings(
