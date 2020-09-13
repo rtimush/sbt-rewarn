@@ -5,8 +5,8 @@ ThisBuild / name := "sbt-updates"
 ThisBuild / organization := "com.timushev.sbt"
 ThisBuild / isSnapshot := (ThisBuild / versionFromGit).value.isInstanceOf[SnapshotVersion]
 ThisBuild / version := (ThisBuild / version).value.replaceAll("""-SNAPSHOT$""", "")
-ThisBuild / homepage := Some(url("https://github.com/rtimush/sbt-updates"))
-ThisBuild / licenses += (("BSD 3-Clause", url("https://github.com/rtimush/sbt-updates/blob/master/LICENSE")))
+ThisBuild / homepage := Some(url("https://github.com/rtimush/sbt-rewarn"))
+ThisBuild / licenses += (("BSD 3-Clause", url("https://github.com/rtimush/sbt-rewarn/blob/master/LICENSE")))
 
 ThisBuild / scalacOptions := Seq("-deprecation", "-unchecked", "-feature")
 
