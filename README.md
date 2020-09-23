@@ -10,7 +10,7 @@ This is particularly helpful if you want to keep your project warning-free. Simp
 
 Requirements
 ==============
-sbt 1.0.0 or later.
+sbt 1.0.0 or later, with an exception of sbt 1.4.0 (sbt 1.4.1+ is supported again).
 
 Installation
 ============
