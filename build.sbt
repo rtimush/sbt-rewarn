@@ -13,7 +13,7 @@ ThisBuild / scalacOptions := Seq("-deprecation", "-unchecked", "-feature")
 Global / scriptedLaunchOpts += s"-Dsbt.rewarn.version=${version.value}"
 
 lazy val `sbt-1.x`       = SbtAxis("1.x", "1.1.5")
-lazy val `sbt-1.4.0-RC1` = SbtAxis("1.4.0-RC1")
+lazy val `sbt-1.4.0-RC2` = SbtAxis("1.4.0-RC2")
 lazy val `sbt-1.3.13`    = SbtAxis("1.3.13")
 lazy val `sbt-1.2.0`     = SbtAxis("1.2.0")
 lazy val `sbt-1.1.0`     = SbtAxis("1.1.0")
@@ -48,7 +48,7 @@ lazy val `sbt-rewarn-adapter-bsp` = (project in file("adapters/bsp"))
   .disablePlugins(GitVersioningPlugin)
   .settings(
     scalaVersion := `sbt-1.x`.scalaVersion,
-    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.4.0-RC1`.fullVersion % Provided,
+    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.4.0-RC2`.fullVersion % Provided,
     publish / skip := true
   )
 
@@ -67,7 +67,7 @@ lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
   .sbtScriptedRow(`sbt-1.1.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.2.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.3.13`, `sbt-1.x`)
-  .sbtScriptedRow(`sbt-1.4.0-RC1`, `sbt-1.x`)
+  .sbtScriptedRow(`sbt-1.4.0-RC2`, `sbt-1.x`)
 
 lazy val root = project
   .withId("sbt-rewarn")

@@ -43,11 +43,11 @@ jobs:
           - { sbt: 1_1_0,     java: 8  }
           - { sbt: 1_2_0,     java: 8  }
           - { sbt: 1_3_13,    java: 8  }
-          - { sbt: 1_4_0-RC1, java: 8  }
+          - { sbt: 1_4_0-RC2, java: 8  }
           - { sbt: 1_3_13,    java: 11 }
-          - { sbt: 1_4_0-RC1, java: 11  }
+          - { sbt: 1_4_0-RC2, java: 11  }
           - { sbt: 1_3_13,    java: 14 }
-          - { sbt: 1_4_0-RC1, java: 14  }
+          - { sbt: 1_4_0-RC2, java: 14  }
       fail-fast: false
     name: test (java ${{ matrix.java }}, sbt ${{ matrix.sbt }})
     steps:
