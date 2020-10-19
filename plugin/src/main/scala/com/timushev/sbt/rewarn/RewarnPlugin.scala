@@ -19,8 +19,6 @@ object RewarnPlugin extends AutoPlugin {
             oldReporter.getClass.getName match {
               case "sbt.internal.server.LanguageServerReporter" =>
                 RewarnLanguageServerReporter.reporter
-              case "sbt.internal.server.BuildServerReporter" =>
-                RewarnBuildServerReporter.reporter
               case _ =>
                 RewarnReporterProxy.reporter(oldReporter)
             }
