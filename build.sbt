@@ -39,7 +39,7 @@ lazy val `sbt-rewarn-adapter-lsp` = (project in file("adapters/lsp"))
   .disablePlugins(GitVersioningPlugin)
   .settings(
     scalaVersion := `sbt-1.x`.scalaVersion,
-    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.3.13`.fullVersion % Provided,
+    libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.4.2`.fullVersion % Provided,
     publish / skip := true
   )
 
