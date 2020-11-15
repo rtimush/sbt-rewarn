@@ -4,21 +4,25 @@ import sbt.VirtualAxis.PlatformAxis
 import sbt._
 import sbt.internal.ProjectMatrix
 
-case class SbtAxis(fullVersion: String, idSuffix: String, directorySuffix: String) extends VirtualAxis.WeakAxis {
+case class SbtAxis(maybeVersion: Option[String], idSuffix: String, directorySuffix: String)
+    extends VirtualAxis.WeakAxis {
+  val fullVersion: Def.Initialize[String] = Def.setting(maybeVersion.getOrElse(sbtVersion.value))
   val scalaVersion: String =
-    VersionNumber(fullVersion) match {
-      case VersionNumber(Seq(0, 13, _*), _, _) => "2.10.7"
-      case VersionNumber(Seq(1, _*), _, _)     => "2.12.10"
-      case _                                   => sys.error(s"Unsupported sbt version: $fullVersion")
+    maybeVersion.map(VersionNumber(_)) match {
+      case Some(VersionNumber(Seq(0, 13, _*), _, _))    => "2.10.7"
+      case Some(VersionNumber(Seq(1, _*), _, _)) | None => "2.12.10"
+      case _                                            => sys.error(s"Unsupported sbt version: $fullVersion")
     }
 }
 
 object SbtAxis {
 
+  def apply(): SbtAxis =
+    SbtAxis(None, "-latest", "-latest")
   def apply(version: String): SbtAxis =
     SbtAxis(version, version)
   def apply(version: String, fullVersion: String): SbtAxis =
-    SbtAxis(fullVersion, "-" + version.replace('.', '_'), "-" + version)
+    SbtAxis(Some(fullVersion), "-" + version.replace('.', '_'), "-" + version)
 
   private val jvm: PlatformAxis = PlatformAxis("jvm", "", "jvm")
 
@@ -32,7 +36,7 @@ object SbtAxis {
             p.settings(
               sbtPlugin := true,
               scalaVersion := axis.scalaVersion,
-              pluginCrossBuild / sbtVersion := axis.fullVersion
+              pluginCrossBuild / sbtVersion := axis.fullVersion.value
             )
           )
       )
@@ -43,7 +47,7 @@ object SbtAxis {
         _.enablePlugins(ScriptedPlugin).settings(
           sbtPlugin := true,
           scalaVersion := axis.scalaVersion,
-          pluginCrossBuild / sbtVersion := axis.fullVersion,
+          pluginCrossBuild / sbtVersion := axis.fullVersion.value,
           publish / skip := true,
           compile / skip := true,
           scriptedDependencies := Def.taskDyn {
