@@ -26,17 +26,16 @@ Add the following line to the `plugins.sbt` file:
 addSbtPlugin("com.timushev.sbt" % "sbt-rewarn" % "x.x.x")
 ```
 
-The latest version is ![Bintray](https://img.shields.io/bintray/v/rtimush/sbt-plugins/sbt-rewarn?color=blue&label=sbt-rewarn&style=plastic)
+The latest version is ![Sonatype](https://img.shields.io/nexus/r/com.timushev.sbt/sbt-rewarn?label=sbt-rewarn%20&server=https%3A%2F%2Foss.sonatype.org)
 
 No additional configuration is necessary, the plugin will be automatically activated.
 
 ### Snapshot version
-Choose one of versions available on [BinTray](https://bintray.com/rtimush/sbt-plugin-snapshots/sbt-rewarn/view)
-or the [latest](https://bintray.com/rtimush/sbt-plugin-snapshots/sbt-rewarn/_latestVersion) one. Then add the following lines to the `plugins.sbt` file:
+Choose one of versions available on [Sonatype](https://oss.sonatype.org/content/repositories/snapshots/com/timushev/sbt/sbt-rewarn_2.12_1.0/). Then add the following lines to the `plugins.sbt` file:
 
 ```
-resolvers += Resolver.bintrayIvyRepo("rtimush", "sbt-plugin-snapshots")
-addSbtPlugin("com.timushev.sbt" % "sbt-rewarn" % "x.x.x-y-zzzzzzz")
+resolvers += Resolver.sonatypeRepo("snapshots")
+addSbtPlugin("com.timushev.sbt" % "sbt-rewarn" % "x.x.x-y-zzzzzzz-SNAPSHOT")
 ```
 
 Note, that snapshots are not updated automatically.
