@@ -26,7 +26,7 @@ Add the following line to the `plugins.sbt` file:
 addSbtPlugin("com.timushev.sbt" % "sbt-rewarn" % "x.x.x")
 ```
 
-The latest version is ![Sonatype](https://img.shields.io/nexus/r/com.timushev.sbt/sbt-rewarn?label=sbt-rewarn%20&server=https%3A%2F%2Foss.sonatype.org)
+The latest version is  [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.timushev.sbt/sbt-rewarn/badge.svg?subject=sbt-rewarn)](https://maven-badges.herokuapp.com/maven-central/com.timushev.sbt/sbt-rewarn/) 
 
 No additional configuration is necessary, the plugin will be automatically activated.
 
