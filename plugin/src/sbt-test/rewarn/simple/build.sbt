@@ -13,7 +13,7 @@ InputKey[Unit]("contains") := {
     if (file1.exists()) IO.read(file1) else "",
     if (file2.exists()) IO.read(file2) else "",
     if (file3.exists()) IO.read(file3) else "",
-    if (file4.exists()) IO.read(file4) else "",
+    if (file4.exists()) IO.read(file4) else ""
   ).mkString("")
   if (!content.contains(expected))
     sys.error(s"Output did not contain '$expected':\n$content")
