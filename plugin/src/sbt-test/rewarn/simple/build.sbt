@@ -1,6 +1,6 @@
 import sbt.complete.DefaultParsers._
 
-scalaVersion := "2.12.13"
+scalaVersion := "2.12.14"
 scalacOptions := Seq("-Xlint:unused")
 
 InputKey[Unit]("contains") := {
