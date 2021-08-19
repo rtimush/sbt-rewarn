@@ -34,8 +34,8 @@ object SbtAxis {
         p =>
           process(
             p.settings(
-              sbtPlugin := true,
-              scalaVersion := axis.scalaVersion,
+              sbtPlugin                     := true,
+              scalaVersion                  := axis.scalaVersion,
               pluginCrossBuild / sbtVersion := axis.fullVersion.value
             )
           )
@@ -45,11 +45,11 @@ object SbtAxis {
         autoScalaLibrary = false,
         axisValues = Seq(axis, jvm),
         _.enablePlugins(ScriptedPlugin).settings(
-          sbtPlugin := true,
-          scalaVersion := axis.scalaVersion,
+          sbtPlugin                     := true,
+          scalaVersion                  := axis.scalaVersion,
           pluginCrossBuild / sbtVersion := axis.fullVersion.value,
-          publish / skip := true,
-          compile / skip := true,
+          publish / skip                := true,
+          compile / skip                := true,
           scriptedDependencies := Def.taskDyn {
             if (insideCI.value) Def.task(())
             else Def.task(()).dependsOn(matrix.finder(buildAxis)(false) / publishLocal)
