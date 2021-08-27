@@ -1,7 +1,7 @@
 import SbtAxis.RichProjectMatrix
 
 ThisBuild / organization := "com.timushev.sbt"
-ThisBuild / homepage := Some(url("https://github.com/rtimush/sbt-rewarn"))
+ThisBuild / homepage     := Some(url("https://github.com/rtimush/sbt-rewarn"))
 ThisBuild / licenses += (("BSD 3-Clause", url("https://github.com/rtimush/sbt-rewarn/blob/master/LICENSE")))
 ThisBuild / publishTo := sonatypePublishToBundle.value
 ThisBuild / developers := List(
@@ -31,18 +31,18 @@ lazy val `sbt-1.0.0`  = SbtAxis("1.0.0")
 lazy val `sbt-rewarn-common` = (project in file("common"))
   .disablePlugins(GitVersioningPlugin)
   .settings(
-    scalaVersion := `sbt-1.x`.scalaVersion,
+    scalaVersion                           := `sbt-1.x`.scalaVersion,
     libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.x`.fullVersion.value % Provided,
-    publish / skip := true
+    publish / skip                         := true
   )
 
 lazy val `sbt-rewarn-adapter-lsp` = (project in file("adapters/lsp"))
   .dependsOn(`sbt-rewarn-common`)
   .disablePlugins(GitVersioningPlugin)
   .settings(
-    scalaVersion := `sbt-1.x`.scalaVersion,
+    scalaVersion                           := `sbt-1.x`.scalaVersion,
     libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.3.13`.fullVersion.value % Provided,
-    publish / skip := true
+    publish / skip                         := true
   )
 
 lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
