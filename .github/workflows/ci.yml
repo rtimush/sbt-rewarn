@@ -88,7 +88,7 @@ jobs:
           key: ${{ runner.os }}-publish-cache-${{ matrix.sbt }}-${{ hashFiles('*.sbt') }}-${{ hashFiles('project/*') }}
       - uses: crazy-max/ghaction-import-gpg@v4
         with:
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
       - uses: olafurpg/setup-scala@v13
         with:
