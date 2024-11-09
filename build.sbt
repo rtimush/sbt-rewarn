@@ -56,7 +56,7 @@ lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
   )
   .sbtScriptedRow(`sbt-1.0.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.1.0`, `sbt-1.x`)
-  .sbtScriptedRow(`sbt-1.2.0`, `sbt-1.x`)
+  .sbtScriptedRow(`sbt-1.2.8`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.3.13`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-latest`, `sbt-1.x`)
 
