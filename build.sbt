@@ -54,7 +54,7 @@ lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
         Compile / products ++= (`sbt-rewarn-adapter-lsp` / Compile / products).value
       )
   )
-  .sbtScriptedRow(`sbt-1.0.0`, `sbt-1.x`)
+  .sbtScriptedRow(`sbt-1.0.4`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.1.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.2.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.3.13`, `sbt-1.x`)
