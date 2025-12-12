@@ -1,4 +1,4 @@
-addSbtPlugin("org.scalameta"       % "sbt-scalafmt"       % "2.5.4")
+addSbtPlugin("org.scalameta"       % "sbt-scalafmt"       % "2.5.6")
 addSbtPlugin("com.rallyhealth.sbt" % "sbt-git-versioning" % "1.6.0")
 addSbtPlugin("com.eed3si9n"        % "sbt-projectmatrix"  % "0.10.1")
 addSbtPlugin("org.xerial.sbt"      % "sbt-sonatype"       % "3.12.2")
