@@ -7,7 +7,7 @@ import sbt.internal.ProjectMatrix
 case class SbtAxis(maybeVersion: Option[String], idSuffix: String, directorySuffix: String)
     extends VirtualAxis.WeakAxis {
   val fullVersion: Def.Initialize[String] = Def.setting(maybeVersion.getOrElse(sbtVersion.value))
-  val scalaVersion: String =
+  val scalaVersion: String                =
     maybeVersion.map(VersionNumber(_)) match {
       case Some(VersionNumber(Seq(1, _*), _, _)) | None => "2.12.21"
       case _                                            => sys.error(s"Unsupported sbt version: $fullVersion")
@@ -49,7 +49,7 @@ object SbtAxis {
           pluginCrossBuild / sbtVersion := axis.fullVersion.value,
           publish / skip                := true,
           compile / skip                := true,
-          scriptedDependencies := Def.taskDyn {
+          scriptedDependencies          := Def.taskDyn {
             if (insideCI.value) Def.task(())
             else Def.task(()).dependsOn(matrix.finder(buildAxis)(false) / publishLocal)
           }.value
