@@ -25,6 +25,7 @@ ThisBuild / scalacOptions := Seq("-deprecation", "-unchecked", "-feature")
 Global / scriptedLaunchOpts += s"-Dsbt.rewarn.version=${version.value}"
 
 lazy val `sbt-1.x`    = SbtAxis("1.x", "1.1.5")
+lazy val `sbt-2.x`    = SbtAxis("2.x", "2.0.0-RC12")
 lazy val `sbt-latest` = SbtAxis()
 lazy val `sbt-1.3.13` = SbtAxis("1.3.13")
 lazy val `sbt-1.2.0`  = SbtAxis("1.2.0")
@@ -34,7 +35,7 @@ lazy val `sbt-1.0.0`  = SbtAxis("1.0.0")
 lazy val `sbt-rewarn-common` = (project in file("common"))
   .disablePlugins(GitVersioningPlugin)
   .settings(
-    scalaVersion                           := `sbt-1.x`.scalaVersion,
+    scalaVersion                           := `sbt-1.x`.scalaVersion.value,
     libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.x`.fullVersion.value % Provided,
     publish / skip                         := true
   )
@@ -43,7 +44,7 @@ lazy val `sbt-rewarn-adapter-lsp` = (project in file("adapters/lsp"))
   .dependsOn(`sbt-rewarn-common`)
   .disablePlugins(GitVersioningPlugin)
   .settings(
-    scalaVersion                           := `sbt-1.x`.scalaVersion,
+    scalaVersion                           := `sbt-1.x`.scalaVersion.value,
     libraryDependencies += "org.scala-sbt" %% "main" % `sbt-1.3.13`.fullVersion.value % Provided,
     publish / skip                         := true
   )
@@ -54,14 +55,24 @@ lazy val `sbt-rewarn` = (projectMatrix in file("plugin"))
     _.dependsOn(`sbt-rewarn-adapter-lsp` % Provided)
       .settings(
         Compile / products ++= (`sbt-rewarn-common` / Compile / products).value,
-        Compile / products ++= (`sbt-rewarn-adapter-lsp` / Compile / products).value
+        Compile / products ++= (`sbt-rewarn-adapter-lsp` / Compile / products).value,
+        addSbtPlugin("com.github.sbt" % "sbt2-compat" % "0.1.0")
       )
+  )
+  .sbtPluginRow(
+    `sbt-2.x`,
+    _.settings(
+      Compile / dependencyClasspath ++= (`sbt-rewarn-common` / Compile / exportedProducts).value,
+      Compile / products ++= (`sbt-rewarn-common` / Compile / products).value,
+      addSbtPlugin("com.github.sbt" % "sbt2-compat" % "0.1.0")
+    )
   )
   .sbtScriptedRow(`sbt-1.0.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.1.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.2.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-1.3.13`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-latest`, `sbt-1.x`)
+  .sbtScriptedRow(`sbt-2.x`, `sbt-2.x`)
 
 lazy val root = project
   .withId("sbt-rewarn")
