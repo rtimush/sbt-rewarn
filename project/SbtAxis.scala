@@ -6,12 +6,20 @@ import sbt.internal.ProjectMatrix
 
 case class SbtAxis(maybeVersion: Option[String], idSuffix: String, directorySuffix: String)
     extends VirtualAxis.WeakAxis {
-  val fullVersion: Def.Initialize[String] = Def.setting(maybeVersion.getOrElse(sbtVersion.value))
-  val scalaVersion: String                =
+  val fullVersion: Def.Initialize[String]  = Def.setting(maybeVersion.getOrElse(sbtVersion.value))
+  val scalaVersion: Def.Initialize[String] = Def.setting {
     maybeVersion.map(VersionNumber(_)) match {
-      case Some(VersionNumber(Seq(1, _*), _, _)) | None => "2.12.21"
-      case _                                            => sys.error(s"Unsupported sbt version: $fullVersion")
+      case Some(VersionNumber(Seq(1, _*), _, _)) => "2.12.21"
+      case Some(VersionNumber(Seq(2, _*), _, _)) => "3.8.3"
+      case None                                  =>
+        VersionNumber(sbtVersion.value) match {
+          case VersionNumber(Seq(1, _*), _, _) => "2.12.21"
+          case VersionNumber(Seq(2, _*), _, _) => "3.8.3"
+          case _                               => sys.error(s"Unsupported sbt version: ${sbtVersion.value}")
+        }
+      case _ => sys.error(s"Unsupported sbt version: $maybeVersion")
     }
+  }
 }
 
 object SbtAxis {
@@ -34,7 +42,7 @@ object SbtAxis {
           process(
             p.settings(
               sbtPlugin                     := true,
-              scalaVersion                  := axis.scalaVersion,
+              scalaVersion                  := axis.scalaVersion.value,
               pluginCrossBuild / sbtVersion := axis.fullVersion.value
             )
           )
@@ -45,8 +53,9 @@ object SbtAxis {
         axisValues = Seq(axis, jvm),
         _.enablePlugins(ScriptedPlugin).settings(
           sbtPlugin                     := true,
-          scalaVersion                  := axis.scalaVersion,
+          scalaVersion                  := axis.scalaVersion.value,
           pluginCrossBuild / sbtVersion := axis.fullVersion.value,
+          scripted / javaHome           := sys.env.get("SBT_SCRIPTED_JAVA_HOME").map(file(_)),
           publish / skip                := true,
           compile / skip                := true,
           scriptedDependencies          := Def.taskDyn {
