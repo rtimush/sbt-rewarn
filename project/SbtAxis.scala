@@ -6,7 +6,7 @@ import sbt.internal.ProjectMatrix
 
 case class SbtAxis(maybeVersion: Option[String], idSuffix: String, directorySuffix: String)
     extends VirtualAxis.WeakAxis {
-  val fullVersion: Def.Initialize[String] = Def.setting(maybeVersion.getOrElse(sbtVersion.value))
+  val fullVersion: Def.Initialize[String]  = Def.setting(maybeVersion.getOrElse(sbtVersion.value))
   val scalaVersion: Def.Initialize[String] = Def.setting {
     maybeVersion.map(VersionNumber(_)) match {
       case Some(VersionNumber(Seq(1, _*), _, _)) => "2.12.21"
