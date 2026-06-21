@@ -5,9 +5,10 @@ import sbt.Keys._
 
 object PluginCompat {
 
-  def compilerReporterSetting(
-      compilerReporterKey: TaskKey[xsbti.Reporter]
-  ): Def.Setting[Task[xsbti.Reporter]] =
+  def compilerReporterKey: TaskKey[xsbti.Reporter] =
+    compile / Accessors.compilerReporter
+
+  def compilerReporterSetting(): Def.Setting[Task[xsbti.Reporter]] =
     compilerReporterKey := Def.uncached {
       new RewarnReporterProxy(compilerReporterKey.value)
     }
