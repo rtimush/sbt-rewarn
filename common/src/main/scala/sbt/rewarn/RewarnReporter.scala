@@ -1,10 +1,11 @@
 package sbt.rewarn
 
-import sbt.internal.inc.Analysis
 import xsbti.compile.CompileAnalysis
+import xsbti.compile.analysis.SourceInfo
 import xsbti.{Problem, Reporter}
 
 import scala.collection.mutable
+import scala.collection.JavaConverters._
 
 trait RewarnReporter extends Reporter {
 
@@ -24,13 +25,11 @@ trait RewarnReporter extends Reporter {
     if (hasErrors) super.printSummary()
 
   def printOldProblems(compileAnalysis: CompileAnalysis): Unit = {
-    val allProblems = compileAnalysis match {
-      case a: Analysis =>
-        a.infos.allInfos.values
-          .flatMap(i => i.getReportedProblems ++ i.getUnreportedProblems)
-      case _ => Nil
+    val sourceInfos = compileAnalysis.readSourceInfos()
+    val allProblems = sourceInfos.getAllSourceInfos.asScala.values.flatMap { info =>
+      info.getReportedProblems.toSeq ++ info.getUnreportedProblems.toSeq
     }
-    allProblems.filterNot(reportedProblems).foreach(log)
+    allProblems.filterNot(reportedProblems).foreach(p => log(p))
     super.printSummary()
   }
 
