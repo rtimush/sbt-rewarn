@@ -45,6 +45,7 @@ jobs:
           - { sbt: latest,    java: 11 }
           - { sbt: latest,    java: 21 }
           - { sbt: latest,    java: 25 }
+          - { sbt: 2_x,       java: 21 }
       fail-fast: false
     name: test (java ${{ matrix.java }}, sbt ${{ matrix.sbt }})
     steps:
@@ -70,6 +71,7 @@ jobs:
       - run: sbt sbt-rewarn-${{ matrix.sbt }}/scripted
         env:
           CI: true
+          SBT_SCRIPTED_JAVA_HOME: ${{ env.JAVA_HOME }}
   test:
     runs-on: ubuntu-latest
     needs: scripted
