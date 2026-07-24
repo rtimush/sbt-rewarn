@@ -10,6 +10,7 @@ case class SbtAxis(maybeVersion: Option[String], idSuffix: String, directorySuff
   val scalaVersion: String                =
     maybeVersion.map(VersionNumber(_)) match {
       case Some(VersionNumber(Seq(1, _*), _, _)) | None => "2.12.21"
+      case Some(VersionNumber(Seq(2, _*), _, _)) | None => "3.8.4"
       case _                                            => sys.error(s"Unsupported sbt version: $fullVersion")
     }
 }
@@ -17,13 +18,13 @@ case class SbtAxis(maybeVersion: Option[String], idSuffix: String, directorySuff
 object SbtAxis {
 
   def apply(): SbtAxis =
-    SbtAxis(None, "-latest", "-latest")
+    SbtAxis(None, "-1_latest", "-1_latest")
   def apply(version: String): SbtAxis =
     SbtAxis(version, version)
   def apply(version: String, fullVersion: String): SbtAxis =
     SbtAxis(Some(fullVersion), "-" + version.replace('.', '_'), "-" + version)
 
-  private val jvm: PlatformAxis = PlatformAxis("jvm", "", "jvm")
+  val jvm: PlatformAxis = PlatformAxis("jvm", "", "jvm")
 
   implicit class RichProjectMatrix(val matrix: ProjectMatrix) extends AnyVal {
     def sbtPluginRow(axis: SbtAxis, process: Project => Project): ProjectMatrix =
