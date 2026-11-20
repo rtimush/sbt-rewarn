@@ -6,11 +6,11 @@ import sbt.internal.ProjectMatrix
 
 case class SbtAxis(maybeVersion: Option[String], idSuffix: String, directorySuffix: String)
     extends VirtualAxis.WeakAxis {
-  val fullVersion: Def.Initialize[String] = Def.setting(maybeVersion.getOrElse(sbtVersion.value))
+  val fullVersion: Def.Initialize[String] = Def.setting(maybeVersion.getOrElse("1.13.1"))
   val scalaVersion: String                =
     maybeVersion.map(VersionNumber(_)) match {
       case Some(VersionNumber(Seq(1, _*), _, _)) | None => "2.12.21"
-      case Some(VersionNumber(Seq(2, _*), _, _)) | None => "3.8.4"
+      case Some(VersionNumber(Seq(2, _*), _, _)) | None => "3.9.0"
       case _                                            => sys.error(s"Unsupported sbt version: $fullVersion")
     }
 }
