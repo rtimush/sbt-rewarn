@@ -9,7 +9,7 @@ object RewarnPlugin extends AutoPlugin {
 
   override def trigger = allRequirements
 
-  override def projectSettings: Seq[Def.Setting[_]] =
+  override def projectSettings: Seq[Def.Setting[?]] =
     Seq(Compile, Test).flatMap { config =>
       inConfig(config)(
         Seq(
